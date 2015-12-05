@@ -1,0 +1,6 @@
+__inline('./lib/vue/vue.js')
+__inline('./lib/jquery/jquery.js')
+__inline('./lib/jquery-ui/jquery-ui.js')
+__inline('./lib/bootstrap/js/bootstrap.js')
+__inline('./lib/page/page.js')
+__inline('./lib/scrat/scrat.js')

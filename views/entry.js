@@ -1,0 +1,1 @@
+require.async(['boot'], (boot) => boot())

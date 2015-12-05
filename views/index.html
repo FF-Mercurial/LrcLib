@@ -1,0 +1,48 @@
+<!--SPA 主文档-->
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!--META-->
+      <meta charset="utf-8">
+      <title>LrcLib</title>
+    
+      <!--适应移动端-->
+      <!--
+      <meta name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+      -->
+      <!-- 适应移动端end -->
+    <!--META END-->
+
+    <!--CSS-->
+      <!--LIB.CSS, 框架级非模块化资源, 一般大而稳定, 不内嵌-->
+        <!--第三方lib-->
+        <link rel="stylesheet" type="text/css" href="./lib.css">
+        <!--业务lib-->
+        <link rel="stylesheet" type="text/css" href="./my-lib.less">
+      <!--LIB.CSS END-->
+    <!--CSS END-->
+  </head>
+  <body>
+    <!--BODY-->
+      <div id="container"></div>
+    <!--BODY END-->
+
+    <!--SCRIPT-->
+      <!--LIB.JS, 框架级非模块化资源, 一般大而稳定, 不内嵌-->
+        <!--第三方lib-->
+        <script src="./lib.js"></script>
+        <!--业务lib-->
+        <script src="./my-lib.js"></script>
+      <!--LIB.JS END-->
+  
+      <!--模块化框架初始化-->
+      <script>require.config(__FRAMEWORK_CONFIG__);</script>
+
+      <!--入口, 一般小而稳定, 内嵌-->
+      <script src="./entry.js?__inline"></script>
+    <!--SCRIPT END-->
+  </body>
+</html>

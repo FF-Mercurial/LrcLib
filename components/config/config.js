@@ -1,0 +1,1 @@
+export default __inline('../../config.json')

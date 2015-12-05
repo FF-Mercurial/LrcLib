@@ -1,0 +1,22 @@
+.w-lrc-editor {
+    &__container {
+        position: relative;
+        height: 400px;
+        overflow: hidden;
+        border-left: solid 1px #ddd;
+        border-right: solid 1px #ddd;
+        border-bottom: solid 1px #ddd;
+    }
+
+    &__tab {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 400px;
+        background: white;
+    }
+
+    &--active {
+        z-index: 1;
+    }
+}

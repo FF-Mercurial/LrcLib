@@ -12,6 +12,10 @@ export default Vue.extend({
           id: 'home',
           text: '制作'
         },
+        {
+          id: 'now',
+          text: '当前歌曲'
+        }
       ]
     }
   },

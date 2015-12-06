@@ -7,5 +7,7 @@
     <component is="page-lib"
                qs="{{ qs }}"
                v-if="curPage === 'lib'"></component>
+    <component is="page-now"
+               v-if="curPage === 'now'"></component>
   </div>
 </div>

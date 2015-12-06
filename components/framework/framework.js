@@ -1,6 +1,7 @@
 import header from 'widgets/header'
 import home from 'pages/home'
 import lib from 'pages/lib'
+import now from 'pages/now'
 
 let opts = {
   template: __inline('./framework.tpl'),
@@ -15,6 +16,7 @@ let opts = {
     'header': header,
     'page-home': home,
     'page-lib': lib,
+    'page-now': now,
   },
   ready: function () {
     // routes

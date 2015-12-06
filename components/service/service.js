@@ -1,5 +1,15 @@
 import loading from 'ui/loading'
 
+export function getNow(cb) {
+  GET('/now', defaultHandler(cb))
+}
+
+export function setNow(now, cb) {
+  PUT('/now', {
+    now: now
+  }, defaultHandler(cb))
+}
+
 export function removeLrc(_id, cb) {
   DELETE(`/lrc/${_id}`, defaultHandler(cb))
 }
@@ -43,6 +53,10 @@ function DELETE(url, onLoad) {
 
 function POST(url, data, onLoad) {
   ajax('POST', url, data, onLoad)
+}
+
+function PUT(url, data, onLoad) {
+  ajax('PUT', url, data, onLoad)
 }
 
 function PATCH(url, data, onLoad) {

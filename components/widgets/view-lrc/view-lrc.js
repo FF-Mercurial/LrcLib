@@ -28,13 +28,21 @@ export default Vue.extend({
     }
   },
   ready: function () {
-    service.getLrc(this._id, (err, data) => {
-      if (err) return popError(err)
+    if (this._id) {
+      service.getLrc(this._id, (err, data) => {
+        if (err) return popError(err)
+  
+        if (!data.lrc) return page('/p/lib')
+  
+        this.lrc = data.lrc
+      })
+    } else {
+      service.getNow((err, data) => {
+        if (err) return popError(err)
 
-      if (!data.lrc) return page('/p/lib')
-
-      this.lrc = data.lrc
-    })
+        this.lrc = data.now
+      })
+    }
   },
   methods: {
     onSubmit: function () {
@@ -69,6 +77,13 @@ export default Vue.extend({
             page('/p/lib')
           })
         }
+      })
+    },
+    onSetNow: function () {
+      service.setNow(this.lrc, (err) => {
+        if (err) return popError(err)
+
+        page('/now')
       })
     }
   },

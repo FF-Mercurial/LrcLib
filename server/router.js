@@ -7,7 +7,7 @@ import { ObjectID } from 'mongodb'
 
 let router = express.Router()
 let indexDoc = fs.readFileSync(path.join(__dirname, '..', 'public', meta.name, meta.version, 'index.html')).toString()
-let db
+let db, now
 
 // boot
 
@@ -17,6 +17,21 @@ function boot(req, res) {
 
 router.get('/', boot)
 router.get('/p/*', boot)
+
+// put-now
+
+router.put('/now', (req, res) => {
+  let _now = req.body.now
+
+  now = _now
+  resEmpty(res)
+})
+
+// get-now
+
+router.get('/now', (req, res) => {
+  resData(res, { now: now })
+})
 
 // search
 

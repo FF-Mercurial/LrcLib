@@ -30,8 +30,8 @@ export default Vue.extend({
       this.lrcs.length = 0
     },
     onLrc: function (lrc) {
-      if (this.lrcs[0]) this.lrcs.pop()
-      this.lrcs.push(lrc)
+      if (this.lrcs[0] === '') this.lrcs.$set(0, lrc)
+      else this.lrcs.push(lrc)
     }
   },
 })

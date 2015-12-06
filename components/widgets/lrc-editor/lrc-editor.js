@@ -2,6 +2,7 @@ import saveLrc from 'widgets/save-lrc'
 import editor from 'widgets/editor'
 import translated from 'widgets/translated'
 import popError from 'widgets/pop-error'
+import * as service from 'service'
 
 export default Vue.extend({
   template: __inline('./lrc-editor.tpl'),
@@ -23,6 +24,15 @@ export default Vue.extend({
     onSave: function () {
       saveLrc(this.content, (err, title, tags, _id) => {
         if (err) return popError(err)
+      })
+    },
+    onSetNow: function () {
+      service.setNow({
+        content: this.content
+      }, (err) => {
+        if (err) return popError(err)
+
+        page('/now')
       })
     }
   },

@@ -56,6 +56,7 @@ export default (container, canvas, translated, color = '#000') => {
       h = Math.floor((l + r) / 2)
       context.font = `${h}px ${FONT_FAMILY}`
       length = measureLine(context, longestLine, marginX)
+      console.log(length, maxLength)
 
       if (length > maxLength) {
         r = h - 1
@@ -70,6 +71,7 @@ export default (container, canvas, translated, color = '#000') => {
   function printTranslatedLrc(translatedLrc, marginX, marginY, lineMargin) {
     let context = canvas.getContext('2d')
 
+    canvas.width = $(container).width()
     let height = calMaxFontHeight(context, translatedLrc, marginX, MAX_HEIGHT, canvas.width)
     let lineHeight = height + marginY
     let canvasHeight = (lineHeight * 2 + lineMargin) * translatedLrc.length

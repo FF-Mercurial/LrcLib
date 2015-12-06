@@ -8,7 +8,7 @@ let opts = {
   template: __inline('./save-lrc.tpl'),
   data: {
     title: '',
-    tags: '',
+    tags: [],
   },
   components: {
     tagsInput: tagsInput

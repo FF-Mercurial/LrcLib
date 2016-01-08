@@ -34,7 +34,7 @@ app.use(base.static());
 app.use(base.error());
 
 app.init = function (cb) {
-  MongoClient.connect(config.mongoHost + '/LrcLib', (err, db) => {
+  MongoClient.connect(config.mongoConnectionString, (err, db) => {
     if (err) {
       cb(err)
     } else {

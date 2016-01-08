@@ -1,4 +1,8 @@
 <div class="w-lrc-editor">
+  <div class="w-lrc-editor__colors">
+    字体颜色: 
+    <span class="w-lrc-editor__color" v-repeat="displayingColors" style="color: {{ $value }}">{{ $key }}</span>
+  </div>
   <ul class="nav nav-tabs">
     <li v-repeat="tab in tabs"
         v-class="active: cur === tab"
@@ -21,6 +25,7 @@
     <div class="w-lrc-editor__tab"
          v-class="w-lrc-editor--active:cur === '翻译'">
       <component is="translated"
+                 colors="{{ colors }}"
                  content="{{ content }}"></component>
     </div>
   </div>

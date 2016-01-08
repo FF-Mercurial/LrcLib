@@ -3,18 +3,19 @@ const MARGIN_X = 8
 const MARGIN_Y = 4
 const LINE_MARGIN = 8
 const FONT_FAMILY = '微软雅黑'
+const DEFAULT_COLOR = '#333'
 
-export default (container, canvas, translated, color = '#000') => {
+export default (container, canvas, translated) => {
   printTranslatedLrc(translated, MARGIN_X, MARGIN_Y, LINE_MARGIN)
 
   function notNeedTranslation(translatedLine) {
-    return translatedLine.every((translatedToken) => translatedToken.dst.length === 0)
+    return translatedLine.tokens.every((translatedToken) => translatedToken.dst.length === 0)
   }
 
   function measureLine(context, translatedLine, marginX) {
     let x = 0
 
-    translatedLine.forEach(function (translatedToken) {
+    translatedLine.tokens.forEach(function (translatedToken) {
       let dstToken = translatedToken.dst
       let srcToken = translatedToken.src
       let dstWidth = context.measureText(dstToken).width
@@ -28,8 +29,8 @@ export default (container, canvas, translated, color = '#000') => {
   }
 
   function getLongestLine(context, translatedLrc, marginX) {
-    let longestLine = []
     let maxLength = 0
+    let longestLine
 
     translatedLrc.forEach((translatedLine) => {
       let length = measureLine(context, translatedLine, marginX)
@@ -45,6 +46,8 @@ export default (container, canvas, translated, color = '#000') => {
 
   function calMaxFontHeight(context, translatedLrc, marginX, maxHeight, maxLength) {
     let longestLine = getLongestLine(context, translatedLrc, marginX)
+    if (!longestLine) return 
+
     let l = 1
     let r = maxHeight
     let height = 0
@@ -56,7 +59,6 @@ export default (container, canvas, translated, color = '#000') => {
       h = Math.floor((l + r) / 2)
       context.font = `${h}px ${FONT_FAMILY}`
       length = measureLine(context, longestLine, marginX)
-      console.log(length, maxLength)
 
       if (length > maxLength) {
         r = h - 1
@@ -96,7 +98,6 @@ export default (container, canvas, translated, color = '#000') => {
     context.font = `${height}px ${FONT_FAMILY}`
     context.fillStyle = '#fff'
     context.fillRect(0, 0, canvas.width, canvas.height)
-    context.fillStyle = color
 
     let x = 0
     let y = 0
@@ -104,8 +105,10 @@ export default (container, canvas, translated, color = '#000') => {
     translatedLrc.forEach((translatedLine) => {
       x = 0
 
+      context.fillStyle = translatedLine.color || DEFAULT_COLOR
+
       if (notNeedTranslation(translatedLine)) {
-        translatedLine.forEach((translatedToken) => {
+        translatedLine.tokens.forEach((translatedToken) => {
           let srcToken = translatedToken.src
           let srcWidth = context.measureText(srcToken).width
 
@@ -114,7 +117,7 @@ export default (container, canvas, translated, color = '#000') => {
         })
         y += lineHeight
       } else {
-        translatedLine.forEach((translatedToken) => {
+        translatedLine.tokens.forEach((translatedToken) => {
           let dstToken = translatedToken.dst
           let srcToken = translatedToken.src
           let dstWidth = context.measureText(dstToken).width

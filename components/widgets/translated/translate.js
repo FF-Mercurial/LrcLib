@@ -1,95 +1,98 @@
 import map from './map'
 
 const TOKEN_RE = getTokenRegex(map)
-const COLOR_RE = /^\s*(\S+)\s*:\s*/
+const COLOR_RE = /^(\S+)\s*:\s*/
+const SPLIT_RE = /(^|\s+)(?=\S+\s*:\s*)/
 
 export default (lrc, colors) => {
   let translatedLrc = []
 
   lrc && lrc.split('\n').forEach((line) => {
-    // extract color
-    let colorRes = extractColor(line)
-    let color = colorRes.color
-    line = colorRes.text
+    translatedLrc.push(line.split(SPLIT_RE).map((piece) => {
+      // extract color
+      let colorRes = extractColor(piece)
+      let color = colorRes.color
+      piece = colorRes.text
 
-    let tokens = []
-    let tsuFlag = false
-    let ptr = 0
-    let m, srcChar, dstChar, nextSrcChar, romaji
+      let tokens = []
+      let tsuFlag = false
+      let ptr = 0
+      let m, srcChar, dstChar, nextSrcChar, romaji
 
-    while (1) {
-      TOKEN_RE.lastIndex = ptr
-      m = TOKEN_RE.exec(line)
+      while (1) {
+        TOKEN_RE.lastIndex = ptr
+        m = TOKEN_RE.exec(piece)
 
-      if (!m) break
+        if (!m) break
 
-      srcChar = m[0]
+        srcChar = m[0]
 
-      if (srcChar === 'っ' || srcChar === 'ッ') {
-        TOKEN_RE.lastIndex = ptr + srcChar.length
-        m = TOKEN_RE.exec(line)
+        if (srcChar === 'っ' || srcChar === 'ッ') {
+          TOKEN_RE.lastIndex = ptr + srcChar.length
+          m = TOKEN_RE.exec(piece)
 
-        if (!m) {
-          dstChar = ''
-        } else {
-          nextSrcChar = m[0]
-          romaji = map[nextSrcChar]
-
-          if (!romaji) {
-            tsuFlag = true
+          if (!m) {
             dstChar = ''
           } else {
-            dstChar = tsu(romaji)
-            srcChar += nextSrcChar
-          }
-        }
-      } else {
-        romaji = map[srcChar]
+            nextSrcChar = m[0]
+            romaji = map[nextSrcChar]
 
-        if (!romaji) {
-          dstChar = ''
+            if (!romaji) {
+              tsuFlag = true
+              dstChar = ''
+            } else {
+              dstChar = tsu(romaji)
+              srcChar += nextSrcChar
+            }
+          }
         } else {
-          dstChar = romaji
+          romaji = map[srcChar]
 
-          if (tsuFlag) {
-            dstChar = tsu(dstChar)
-            tsuFlag = false
+          if (!romaji) {
+            dstChar = ''
+          } else {
+            dstChar = romaji
+
+            if (tsuFlag) {
+              dstChar = tsu(dstChar)
+              tsuFlag = false
+            }
           }
         }
+
+        ptr += srcChar.length
+
+        if (srcChar[0] === '#') srcChar = srcChar.substr(1)
+
+        tokens.push({
+          src: srcChar,
+          dst: dstChar,
+        })
       }
 
-      ptr += srcChar.length
+      return {
+        color: color,
+        tokens: tokens
+      }
+    }))
 
-      if (srcChar[0] === '#') srcChar = srcChar.substr(1)
+    function extractColor(text) {
+      let m = text.match(COLOR_RE)
+      let colorId = m && m[1]
+      let color = colorId && colors[colorId]
 
-      tokens.push({
-        src: srcChar,
-        dst: dstChar,
-      })
+      if (color) {
+        return {
+          color: color,
+          text: text.replace(COLOR_RE, '')
+        }
+      } else {
+        return { text: text }
+      }
     }
-
-    translatedLrc.push({
-      color: color,
-      tokens: tokens
-    })
   })
 
   return translatedLrc
-
-  function extractColor(text) {
-    let m = text.match(COLOR_RE)
-    let colorId = m && m[1]
-    let color = colorId && colors[colorId]
-
-    if (color) {
-      return {
-        color: color,
-        text: text.replace(COLOR_RE, '')
-      }
-    } else {
-      return { text: text }
-    }
-  }
 }
 
 

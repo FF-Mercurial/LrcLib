@@ -9,20 +9,22 @@ export default (container, canvas, translated) => {
   printTranslatedLrc(translated, MARGIN_X, MARGIN_Y, LINE_MARGIN)
 
   function notNeedTranslation(translatedLine) {
-    return translatedLine.tokens.every((translatedToken) => translatedToken.dst.length === 0)
+    return translatedLine.every((piece) => piece.tokens.every((token) => token.dst.length === 0))
   }
 
   function measureLine(context, translatedLine, marginX) {
     let x = 0
 
-    translatedLine.tokens.forEach(function (translatedToken) {
-      let dstToken = translatedToken.dst
-      let srcToken = translatedToken.src
-      let dstWidth = context.measureText(dstToken).width
-      let srcWidth = context.measureText(srcToken).width
-      let maxWidth = Math.max(dstWidth, srcWidth)
-      if (dstToken.length > 0) maxWidth += marginX
-      x += maxWidth
+    translatedLine.forEach((piece) => {
+      piece.tokens.forEach((token) => {
+        let dstToken = token.dst
+        let srcToken = token.src
+        let dstWidth = context.measureText(dstToken).width
+        let srcWidth = context.measureText(srcToken).width
+        let maxWidth = Math.max(dstWidth, srcWidth)
+        if (dstToken.length > 0) maxWidth += marginX
+        x += maxWidth
+      })
     })
 
     return x
@@ -105,33 +107,37 @@ export default (container, canvas, translated) => {
     translatedLrc.forEach((translatedLine) => {
       x = 0
 
-      context.fillStyle = translatedLine.color || DEFAULT_COLOR
-
       if (notNeedTranslation(translatedLine)) {
-        translatedLine.tokens.forEach((translatedToken) => {
-          let srcToken = translatedToken.src
-          let srcWidth = context.measureText(srcToken).width
+        translatedLine.forEach((piece) => {
+          piece.tokens.forEach((token) => {
+            let srcToken = token.src
+            let srcWidth = context.measureText(srcToken).width
 
-          context.fillText(srcToken, x, y + lineHeight)
-          x += srcWidth
+            context.fillStyle = piece.color || DEFAULT_COLOR
+            context.fillText(srcToken, x, y + lineHeight)
+            x += srcWidth
+          })
         })
         y += lineHeight
       } else {
-        translatedLine.tokens.forEach((translatedToken) => {
-          let dstToken = translatedToken.dst
-          let srcToken = translatedToken.src
-          let dstWidth = context.measureText(dstToken).width
-          let srcWidth = context.measureText(srcToken).width
-          let maxWidth = Math.max(dstWidth, srcWidth)
-          let dstOffset, srcOffset
+        translatedLine.forEach((piece) => {
+          piece.tokens.forEach((token) => {
+            let dstToken = token.dst
+            let srcToken = token.src
+            let dstWidth = context.measureText(dstToken).width
+            let srcWidth = context.measureText(srcToken).width
+            let maxWidth = Math.max(dstWidth, srcWidth)
+            let dstOffset, srcOffset
 
-          if (dstToken.length > 0) maxWidth += marginX
+            if (dstToken.length > 0) maxWidth += marginX
 
-          dstOffset = (maxWidth - dstWidth) / 2
-          srcOffset = (maxWidth - srcWidth) / 2
-          context.fillText(dstToken, x + dstOffset, y + lineHeight)
-          context.fillText(srcToken, x + srcOffset, y + lineHeight * 2)
-          x += maxWidth
+            dstOffset = (maxWidth - dstWidth) / 2
+            srcOffset = (maxWidth - srcWidth) / 2
+            context.fillStyle = piece.color || DEFAULT_COLOR
+            context.fillText(dstToken, x + dstOffset, y + lineHeight)
+            context.fillText(srcToken, x + srcOffset, y + lineHeight * 2)
+            x += maxWidth
+          })
         })
         y += lineHeight * 2
       }

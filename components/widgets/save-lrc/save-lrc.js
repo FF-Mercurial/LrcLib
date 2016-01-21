@@ -24,13 +24,9 @@ let opts = {
       if (!this.title) return this.alert('请填写标题')
 
       service.saveLrc(this.title, this.tags, this.content, (err, data) => {
+        if (err) return popError(err)
         this.closePop()
-
-        popAlert({
-          title: '保存成功',
-          content: '成功保存 `' + this.title + '` 到歌词库',
-          color: 'success'
-        })
+        this.onSubmit && this.onSubmit(data._id)
       })
     },
   },

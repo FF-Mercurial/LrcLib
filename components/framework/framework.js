@@ -22,21 +22,40 @@ let opts = {
     // routes
     page.base('/p')
     page('/:pageId', (ctx) => {
-      // update curPage
-      let m = ctx.pathname.match(/\/p\/([^\/]+)$/)
-      this.curPage = m && m[1]
+      var that = this
+      
+      if (this.curPage) {
+        var page = this.$['page-' + this.curPage]
+        if (page && page.confirmBeforeLeave) {
+          if (typeof page.confirmBeforeLeave === 'function') {
+            page.confirmBeforeLeave((yes) => yes && foo())
+          } else {
+            confirm('确定要离开此页吗?') && foo()
+          }
+        } else {
+          foo()
+        }
+      } else {
+        foo()
+      }
 
-      // update qs
-      let qs = {}
+      function foo() {
+        // update curPage
+        let m = ctx.pathname.match(/\/p\/([^\/]+)$/)
+        that.curPage = m && m[1]
 
-      ctx.querystring.split('&').forEach((kv) => {
-        let _kv = kv.split('=')
-        let key = _kv[0]
-        let value = _kv[1]
-        qs[key] = value
-      })
+        // update qs
+        let qs = {}
 
-      this.qs = qs
+        ctx.querystring.split('&').forEach((kv) => {
+          let _kv = kv.split('=')
+          let key = _kv[0]
+          let value = _kv[1]
+          qs[key] = value
+        })
+
+        that.qs = qs
+      }
     })
     page('*', '/home')
     page()

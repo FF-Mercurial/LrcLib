@@ -8,5 +8,6 @@
              total="{{ total }}"
              v-ref="pagination"></component>
   <component is="lrcEditor"
+             v-ref="lrcEditor"
              content="{{@ lrcs[cur] }}"></component>
 </div>

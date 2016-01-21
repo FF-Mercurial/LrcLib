@@ -27,6 +27,16 @@ export default Vue.extend({
       return config.staticHost + path
     }
   },
+  computed: {
+    dirty: {
+      get: function () {
+        return this.$.lrcEditor.dirty
+      },
+      set: function (val) {
+        this.$.lrcEditor.dirty = val
+      }
+    }
+  },
   ready: function () {
     if (this._id) {
       service.getLrc(this._id, (err, data) => {
@@ -52,6 +62,7 @@ export default Vue.extend({
         content: this.lrc.content,
       }, (err) => {
         if (err) return popError(err)
+        this.dirty = false
 
         $(this.$$.hint)
           .css({

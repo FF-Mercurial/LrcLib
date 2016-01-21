@@ -20,6 +20,7 @@
     <div class="w-lrc-editor__tab"
          v-class="w-lrc-editor--active:cur === '原文'">
       <component is="editor"
+                 v-ref="editor"
                  content="{{@ content }}"></component>
     </div>
     <div class="w-lrc-editor__tab"

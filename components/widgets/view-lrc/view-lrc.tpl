@@ -12,7 +12,7 @@
     <div class="w-view-lrc__img-container" v-if="lrc.isImg">
       <img class="w-view-lrc__img" v-attr="src: lrc.content | url">
     </div>
-    <component is="lrcEditor" content="{{@ lrc.content }}" no-save="no-save" v-if="!lrc.isImg"></component>
+    <component is="lrcEditor" v-ref="lrcEditor" content="{{@ lrc.content }}" no-save="no-save" v-if="!lrc.isImg"></component>
   </div>
   <div class="w-view-lrc__field" v-if="_id">
     <button class="btn btn-success" v-on="click: onSetNow">设为当前</button>

@@ -35,6 +35,14 @@ export default Vue.extend({
     }
   },
   computed: {
+    dirty: {
+      get: function () {
+        return this.$.editor.dirty
+      },
+      set: function (val) {
+        this.$.editor.dirty = val
+      }
+    },
     displayingColors: function () {
       let res = {}
       let colorToIds = {}
@@ -62,8 +70,9 @@ export default Vue.extend({
       this.cur = key
     },
     onSave: function () {
-      saveLrc(this.content, (err, title, tags, _id) => {
-        if (err) return popError(err)
+      saveLrc(this.content, (_id) => {
+        this.dirty = false
+        page('/lib?_id=' + _id)
       })
     },
     onSetNow: function () {

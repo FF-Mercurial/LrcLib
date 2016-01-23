@@ -21,7 +21,9 @@ const colors = {
   'pp': '#967ADC',
   'p': '#967ADC',
   'pink': '#D770AD',
-  'pk': '#D770AD'
+  'pk': '#D770AD',
+  'black': '#333',
+  'bl': '#333'
 }
 
 export default Vue.extend({

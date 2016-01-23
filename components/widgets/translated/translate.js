@@ -87,7 +87,10 @@ export default (lrc, colors) => {
           text: text.replace(COLOR_RE, '')
         }
       } else {
-        return { text: text }
+        return {
+          color: 'black',
+          text: text
+        }
       }
     }
   })

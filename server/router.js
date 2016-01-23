@@ -112,7 +112,7 @@ router.get('/lrcs', (req, res) => {
   db.collection('lrcs').find({}, {
     isImg: 0,
     content: 0,
-  }).sort({ _id : -1 }).toArray((err, docs) => {
+  }).sort({ pos : -1 }).toArray((err, docs) => {
     if (err) res500(res)
     else resData(res, { lrcs: docs })
   })
@@ -129,6 +129,7 @@ router.post('/lrc', (req, res) => {
     title: title,
     tags: tags,
     content: content,
+    pos: Date.now()
   }, (err, data) => {
     if (err) res500(res)
     else resData(res, { _id: data.ops[0]._id})

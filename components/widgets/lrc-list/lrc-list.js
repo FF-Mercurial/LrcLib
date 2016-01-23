@@ -44,7 +44,7 @@ export default Vue.extend({
     service.getLrcs((err, data) => {
       if (err) return popError(err)
 
-      this.lrcs = data.lrcs.reverse()
+      this.lrcs = data.lrcs
     })
   }
 })

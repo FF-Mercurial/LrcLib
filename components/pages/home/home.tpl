@@ -9,5 +9,6 @@
              v-ref="pagination"></component>
   <component is="lrcEditor"
              v-ref="lrcEditor"
-             content="{{@ lrcs[cur] }}"></component>
+             content="{{@ lrcs[cur] }}"
+             edit="edit"></component>
 </div>

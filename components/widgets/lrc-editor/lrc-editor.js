@@ -28,7 +28,7 @@ const colors = {
 
 export default Vue.extend({
   template: __inline('./lrc-editor.tpl'),
-  props: ['content', 'no-save'],
+  props: ['content', 'no-save', 'edit'],
   data: function () {
     return {
       tabs: ['原文', '翻译'],
@@ -87,4 +87,7 @@ export default Vue.extend({
       })
     }
   },
+  ready: function () {
+    if (!this.edit) this.cur = '翻译'
+  }
 })

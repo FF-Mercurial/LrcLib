@@ -16,7 +16,6 @@
   </div>
   <div v-if="!lrc && !_id">没有当前歌词</div>
   <div class="w-view-lrc__field" v-if="_id">
-    <button class="btn btn-success" v-on="click: onSetNow">设为当前</button>
     <button class="btn btn-primary" v-on="click: onSubmit">修改</button>
     <button class="btn btn-danger" v-on="click: onRemove">删除</button>
     <span class="w-view-lrc__hint" v-el="hint">修改成功!</span>

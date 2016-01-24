@@ -9,11 +9,11 @@
         v-on="click: onSwitch(tab)">
       <a href="javascript:;">{{ tab }}</a>
     </li>
+    <li v-on="click: onSetNow">
+      <a href="javascript:;">设为当前</a>
+    </li>
     <li v-on="click: onSave" v-if="!noSave">
       <a href="javascript:;">保存</a>
-    </li>
-    <li v-on="click: onSetNow" v-if="!noSave">
-      <a href="javascript:;">设为当前</a>
     </li>
   </ul>
   <div class="w-lrc-editor__container">

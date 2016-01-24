@@ -2,6 +2,7 @@ import localSearch from 'widgets/local-search'
 import * as _ from 'util'
 import * as service from 'service'
 import popError from 'widgets/pop-error'
+import './jquery-sortable'
 
 export default Vue.extend({
   template: __inline('./lrc-list.tpl'),

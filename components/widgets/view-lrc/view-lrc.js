@@ -13,6 +13,7 @@ export default Vue.extend({
       lrc: {
         title: '',
         tags: [],
+        searchTags: [],
         isImg: false,
         content: '',
       }
@@ -44,6 +45,8 @@ export default Vue.extend({
   
         if (!data.lrc) return page('/p/lib')
   
+        if (!data.lrc.tags) data.lrc.tags = []
+        if (!data.lrc.searchTags) data.lrc.searchTags = []
         this.lrc = data.lrc
       })
     } else {
@@ -59,6 +62,7 @@ export default Vue.extend({
       service.patchLrc(this._id, {
         title: this.lrc.title,
         tags: this.lrc.tags,
+        searchTags: this.lrc.searchTags,
         content: this.lrc.content,
       }, (err) => {
         if (err) return popError(err)

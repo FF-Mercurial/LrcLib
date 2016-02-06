@@ -35,7 +35,8 @@ export default Vue.extend({
             return regex.test(tag)
           })) return true
 
-          if (_.has(lrc.specialTags, (tag) => {
+          if (_.has(lrc.searchTags, (tag) => {
+
             return regex.test(tag)
           })) return true
   
@@ -51,17 +52,18 @@ export default Vue.extend({
       if (err) return popError(err)
 
       this.lrcs = data.lrcs
+      this.lrcs.forEach((lrc) => {
+        lrc.searchTags = lrc.searchTags || []
+      })
       this.lrcs.forEach(addKanaTag)
     })
 
     function addKanaTag(lrc) {
       let foo = [lrc.title]
-      let specialTags = []
       _.pushArray(foo, lrc.tags)
       foo.forEach((item) => {
-        specialTags.push(jp.toKana(item))
+        lrc.searchTags.push(jp.toKana(item))
       })
-      lrc.specialTags = specialTags
     }
   }
 })

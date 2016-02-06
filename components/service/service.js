@@ -26,10 +26,11 @@ export function getLrcs(cb) {
   GET('/lrcs', defaultHandler(cb))
 }
 
-export function saveLrc(title, tags, content, cb) {
+export function saveLrc(title, tags, searchTags, content, cb) {
   POST('/lrc', {
     title: title,
     tags: tags,
+    searchTags: searchTags,
     content: content,
   }, defaultHandler(cb))
 }

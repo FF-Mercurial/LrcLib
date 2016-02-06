@@ -18,6 +18,13 @@
                    on-change="{{ clearAlert }}"
                    on-enter="{{ _onSubmit }}"></component>
       </div>
+      <div class="w-save-lrc__field">
+        <label>搜索标签</label>
+        <component is="tagsInput"
+                   tags="{{@ searchTags }}"
+                   on-change="{{ clearAlert }}"
+                   on-enter="{{ _onSubmit }}"></component>
+      </div>
       <div class="w-save-lrc__field text-right">
         <button class="btn btn-normal" v-on="click: closePop">取消</button>
         <button class="btn btn-primary" v-on="click: _onSubmit">提交</button>

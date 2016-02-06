@@ -9,6 +9,7 @@ let opts = {
   data: {
     title: '',
     tags: [],
+    searchTags: [],
   },
   components: {
     tagsInput: tagsInput
@@ -23,7 +24,7 @@ let opts = {
     _onSubmit: function () {
       if (!this.title) return this.alert('请填写标题')
 
-      service.saveLrc(this.title, this.tags, this.content, (err, data) => {
+      service.saveLrc(this.title, this.tags, this.searchTags, this.content, (err, data) => {
         if (err) return popError(err)
         this.closePop()
         this.onSubmit && this.onSubmit(data._id)

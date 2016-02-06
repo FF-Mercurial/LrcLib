@@ -7,6 +7,10 @@
     <label>标签</label>
     <component is="tagsInput" tags="{{@ lrc.tags }}"></component>
   </div>
+  <div class="w-view-lrc__field" v-if="_id">
+    <label>搜索标签</label>
+    <component is="tagsInput" tags="{{@ lrc.searchTags }}"></component>
+  </div>
   <div class="w-view-lrc__field" v-if="lrc">
     <label>歌词{{ lrc.isImg ? ' (这份歌词是图片格式, 不支持编辑)' : '' }}</label>
     <div class="w-view-lrc__img-container" v-if="lrc.isImg">

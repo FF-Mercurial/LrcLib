@@ -1,4 +1,4 @@
-import map from './map'
+import { map } from 'jp'
 
 const TOKEN_RE = getTokenRegex(map)
 const COLOR_RE = /^(\S+)\s*:\s*/

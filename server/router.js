@@ -123,11 +123,13 @@ router.get('/lrcs', (req, res) => {
 router.post('/lrc', (req, res) => {
   let title = req.body.title
   let tags = req.body.tags
+  let searchTags = req.body.searchTags
   let content = req.body.content
 
   db.collection('lrcs').insert({
     title: title,
     tags: tags,
+    searchTags: searchTags,
     content: content,
     pos: Date.now()
   }, (err, data) => {

@@ -13,7 +13,10 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav"
             v-repeat="page in pages">
-          <li v-class="active: curPage === page.id"><a href="/p/{{ page.id }}">{{ page.text }}</a></li>
+          <li v-class="active: curPage === page.id ||
+                               (page.alias && page.alias.indexOf(curPage) !== -1)">
+            <a href="/p/{{ page.id }}">{{ page.text }}</a>
+          </li>
         </ul>
       </div>
     </div>

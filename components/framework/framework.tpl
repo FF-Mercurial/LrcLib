@@ -1,15 +1,11 @@
 <div class="f-framework">
   <component is="header" cur-page="{{ curPage }}"></component>
   <div class="f-framework__page container">
-    <component is="page-home"
-               v-ref="page-home"
-               v-if="curPage === 'home'"></component>
-    <component is="page-lib"
-               v-ref="page-lib"
-               qs="{{ qs }}"
-               v-if="curPage === 'lib'"></component>
-    <component is="page-now"
-               v-ref="page-now"
-               v-if="curPage === 'now'"></component>
+    <component is="page-{{ curPage }}"
+               v-if="pageExists(curPage)"
+               v-ref="page"
+               params="{{ params }}"></component>
+    <component is="404"
+               v-if="!pageExists(curPage)"></component>
   </div>
 </div>

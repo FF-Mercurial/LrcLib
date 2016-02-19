@@ -3,10 +3,10 @@ import * as _ from 'util'
 import * as jp from 'jp'
 import * as service from 'service'
 import popError from 'widgets/pop-error'
-import './jquery-sortable'
+import confirm from 'ui/confirm'
 
 export default Vue.extend({
-  template: __inline('./lrc-list.tpl'),
+  template: __inline('./lrcs.tpl'),
   data: function () {
     return {
       lrcs: []

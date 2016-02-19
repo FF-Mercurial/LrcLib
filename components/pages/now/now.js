@@ -1,9 +1,32 @@
-import viewLrc from 'widgets/view-lrc'
-import popError from 'widgets/pop-error'
+import * as service from 'service'
+import popErrror from 'widgets/pop-error'
+import lrcEditor from 'widgets/lrc-editor'
+import config from 'config'
 
 export default Vue.extend({
   template: __inline('./now.tpl'),
+  props: ['_id'],
+  data: function () {
+    return {
+      lrc: {
+        content: '',
+        isImg: false
+      }
+    }
+  },
   components: {
-    viewLrc: viewLrc
+    lrcEditor: lrcEditor
+  },
+  filters: {
+    url: function (path) {
+      return config.staticHost + path
+    }
+  },
+  ready: function () {
+    service.getNow((err, data) => {
+      if (err) return popError(err)
+
+      this.lrc = data.now
+    })
   }
 })

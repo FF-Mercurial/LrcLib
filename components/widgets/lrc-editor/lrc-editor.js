@@ -74,7 +74,7 @@ export default Vue.extend({
     onSave: function () {
       saveLrc(this.content, (_id) => {
         this.dirty = false
-        page('/lib?_id=' + _id)
+        page('/lrc/' + _id)
       })
     },
     onSetNow: function () {

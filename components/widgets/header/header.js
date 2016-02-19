@@ -5,8 +5,9 @@ export default Vue.extend({
     return {
       pages: [
         {
-          id: 'lib',
-          text: '歌词库'
+          id: 'lrcs',
+          text: '歌词库',
+          alias: ['lrc']
         },
         {
           id: 'home',

@@ -6,8 +6,8 @@ import confirm from 'ui/confirm'
 import config from 'config'
 
 export default Vue.extend({
-  template: __inline('./view-lrc.tpl'),
-  props: ['_id'],
+  template: __inline('./lrc.tpl'),
+  props: ['params'],
   data: function () {
     return {
       lrc: {
@@ -36,26 +36,21 @@ export default Vue.extend({
       set: function (val) {
         this.$.lrcEditor.dirty = val
       }
+    },
+    _id: function () {
+      return this.params._id
     }
   },
   ready: function () {
-    if (this._id) {
-      service.getLrc(this._id, (err, data) => {
-        if (err) return popError(err)
-  
-        if (!data.lrc) return page('/p/lib')
-  
-        if (!data.lrc.tags) data.lrc.tags = []
-        if (!data.lrc.searchTags) data.lrc.searchTags = []
-        this.lrc = data.lrc
-      })
-    } else {
-      service.getNow((err, data) => {
-        if (err) return popError(err)
+    service.getLrc(this._id, (err, data) => {
+      if (err) return popError(err)
 
-        this.lrc = data.now
-      })
-    }
+      if (!data.lrc) return page('/p/lrcs')
+
+      if (!data.lrc.tags) data.lrc.tags = []
+      if (!data.lrc.searchTags) data.lrc.searchTags = []
+      this.lrc = data.lrc
+    })
   },
   methods: {
     onSubmit: function () {
@@ -89,7 +84,7 @@ export default Vue.extend({
           service.removeLrc(this._id, (err) => {
             if (err) return popError(err)
 
-            page('/p/lib')
+            page('/p/lrcs')
           })
         }
       })
@@ -100,6 +95,16 @@ export default Vue.extend({
 
         page('/now')
       })
-    }
+    },
+    confirmBeforeLeave: function (cb) {
+      if (this.$.lrcEditor.dirty) {
+        confirm({
+          title: '离开页面',
+          content: '有歌词正在编辑, 确定要离开此页?'
+        }, cb)
+      } else {
+        cb(true)
+      }
+    },
   },
 })

@@ -4,6 +4,7 @@ import lrcs from 'pages/lrcs'
 import lrc from 'pages/lrc'
 import now from 'pages/now'
 import page404 from 'pages/404'
+import confirm from 'ui/confirm'
 
 let components = {
   'header': header,
@@ -32,23 +33,32 @@ let opts = {
   },
   components: components,
   ready: function () {
-    let lastUrl = location.href
+    window.onbeforeunload = () => {
+      let page = this.$.page
+      if (page && page.confirmBeforeLeave) return page.confirmBeforeLeave()
+    }
     
     // routes
     page.base('/p')
-    page('*', (ctx, next) => {
-      var page = this.$.page
+    page.exit('*', (ctx, next) => {
+      let page = this.$.page
       if (page && page.confirmBeforeLeave) {
-        page.confirmBeforeLeave((yes) => {
-          if (yes) next()
-          else history.replaceState({}, 'foo', lastUrl)
-        })
+        let msg = page.confirmBeforeLeave()
+        if (msg) {
+          confirm({
+            title: '离开页面',
+            content: msg
+          }, (yes) => {
+            if (yes) next()
+          })
+        } else {
+          next()
+        }
       } else {
         next()
       }
     })
     page('*', (ctx, next) => {
-      lastUrl = ctx.canonicalPath
       // update query
       let query = {}
 

@@ -26,14 +26,7 @@ export default Vue.extend({
   },
   methods: {
     confirmBeforeLeave: function (cb) {
-      if (this.$.lrcEditor.dirty) {
-        confirm({
-          title: '离开页面',
-          content: '有歌词正在编辑, 确定要离开此页?'
-        }, cb)
-      } else {
-        cb(true)
-      }
+      if (this.$.lrcEditor.dirty) return '有歌词正在编辑, 确定要离开此页?'
     },
     onClearLrcs: function () {
       this.cur = 0

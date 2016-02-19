@@ -121,18 +121,10 @@ router.get('/lrcs', (req, res) => {
 // post lrc
 
 router.post('/lrc', (req, res) => {
-  let title = req.body.title
-  let tags = req.body.tags
-  let searchTags = req.body.searchTags
-  let content = req.body.content
+  let lrc = req.body
+  lrc.pos = Date.now()
 
-  db.collection('lrcs').insert({
-    title: title,
-    tags: tags,
-    searchTags: searchTags,
-    content: content,
-    pos: Date.now()
-  }, (err, data) => {
+  db.collection('lrcs').insert(lrc, (err, data) => {
     if (err) res500(res)
     else resData(res, { _id: data.ops[0]._id})
   })

@@ -1,4 +1,4 @@
-export default {
+let map = {
   'ツァ': 'tsa',
   'ファ': 'fa',
   'ウィ': 'wi',
@@ -228,3 +228,8 @@ export default {
   'ぁ': 'a',
   'ぇ': 'e',
 }
+
+map['#は'] = 'wa'
+map['#へ'] = 'e'
+
+export default map

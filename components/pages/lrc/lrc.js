@@ -1,5 +1,5 @@
 import * as service from 'service'
-import popErrror from 'widgets/pop-error'
+import popError from 'widgets/pop-error'
 import lrcEditor from 'widgets/lrc-editor'
 import tagsInput from 'ui/tags-input'
 import confirm from 'ui/confirm'

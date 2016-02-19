@@ -3,6 +3,7 @@ import alert from 'ui/inline-alert'
 import * as service from 'service'
 import tagsInput from 'ui/tags-input'
 import popAlert from 'ui/pop-alert'
+import popError from 'widgets/pop-error'
 
 let opts = {
   template: __inline('./save-lrc.tpl'),

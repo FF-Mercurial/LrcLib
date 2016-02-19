@@ -84,6 +84,24 @@ function ajax(method, url, data, onLoad, noLoading) {
     noLoading || loading.hide()
     onLoad && onLoad(this.response && JSON.parse(this.response))
   }
+  req.onerror = function (e) {
+    noLoading || loading.hide()
+    if (req.status === 0) {
+      onLoad({
+        err: {
+          code: 233,
+          message: '服务器炸啦@_@'
+        }
+      })
+    } else {
+      onLoad({
+        err: {
+          code: req.status,
+          message: req.statusText
+        }
+      })
+    }
+  }
 }
 
 function streamAjax(method, url, data, onChunk, onEnd, showLoading) {

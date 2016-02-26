@@ -1,4 +1,5 @@
 {
   "staticHost": "http://120.24.211.137:81",
-  "mongoHost": "mongodb://user:pass@120.24.211.137:27017"
+  "mongoHost": "mongodb://user:pass@120.24.211.137:27017",
+  "bingAccountKey": ""
 }

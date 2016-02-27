@@ -1,19 +1,21 @@
 import config from './config'
 import fs from 'fs'
+import path from 'path'
 import { MongoClient } from 'mongodb'
+
+let localList = fs.readdirSync(path.resolve(__dirname, 'lrcs')).map((filename) => filename.replace(/\.pdf$/, ''))
+
+// process.exit()
 
 MongoClient.connect(config.mongoConnectionString, (err, db) => {
   if (err) throw err
 
-  db.collection('lrcs').find({}).toArray((err, lrcs) => {
-    lrcs.forEach((lrc) => {
-      let pos = 1000 * parseInt(lrc._id.toString().slice(0, 8), 16)
-      db.collection('lrcs').updateOne({ _id: lrc._id }, {
-        $set: { pos: pos }
-      }, (err, data) => {
-        if (err) throw err
-        console.log(lrc._id)
-      })
+  db.collection('lrcs').find({}, { title: 1 }).toArray((err, lrcs) => {
+    let remoteList = lrcs.map((lrc) => lrc.title)
+    let foo = []
+    localList.forEach((item) => {
+      if (remoteList.indexOf(item) === -1) foo.push(item)
     })
+    console.log(foo)
   })
 })

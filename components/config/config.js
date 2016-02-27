@@ -1,1 +1,1 @@
-export default __inline('../../config.json')
+export default __inline('../../client-config.json')

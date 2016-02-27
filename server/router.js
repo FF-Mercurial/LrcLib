@@ -2,7 +2,7 @@ import express from 'express'
 import fs from 'fs'
 import path from 'path'
 import meta from '../package.json'
-import searchLrc from './search-lrc'
+import searchLrcs from './search-lrcs'
 import { ObjectID } from 'mongodb'
 
 let router = express.Router()
@@ -37,16 +37,17 @@ router.get('/now', (req, res) => {
 
 const SEARCH_LIMIT = 30
 
-router.get('/search', (req, res) => {
-  let wd = req.query.wd
-
-  searchLrc(
-    wd,
-    SEARCH_LIMIT,
-    (progress) => res.write(JSON.stringify({ type: 'progress', value: progress })),
-    (lrc) => res.write(JSON.stringify({ type: 'lrc', value: lrc })),
-    () => res.end()
-  )
+router.get('/search/:searchEngine/:keyword', (req, res) => {
+  let params = req.params
+  
+  searchLrcs({
+    keyword: params.keyword,
+    limit: SEARCH_LIMIT,
+    searchEngine: params.searchEngine,
+    onProgress: (progress) => res.write(JSON.stringify({ type: 'progress', value: progress })),
+    onLrc: (lrc) => res.write(JSON.stringify({ type: 'lrc', value: lrc })),
+    onEnd: () => res.end()
+  })
 })
 
 // remove lrc

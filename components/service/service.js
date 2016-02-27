@@ -35,9 +35,9 @@ export function saveLrc(title, tags, searchTags, content, cb) {
   }, defaultHandler(cb))
 }
 
-export function search(wd, onProgress, onLrc, onEnd) {
+export function search({ keyword, searchEngine, onProgress, onLrc, onEnd }) {
   streamGet(
-    `/search?wd=${wd}`,
+    `/search/${searchEngine}/${keyword}`,
     (chunk) => {
       switch (chunk.type) {
         case 'progress': return onProgress && onProgress(chunk.value)

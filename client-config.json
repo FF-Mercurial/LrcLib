@@ -1,0 +1,4 @@
+{
+  "searchEngines": ["baidu", "bing"],
+  "staticHost": "http://120.24.211.137:81",
+}

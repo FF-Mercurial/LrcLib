@@ -1,14 +1,18 @@
 import * as service from 'service'
+import config from 'config'
 import autoFocus from 'directives/auto-focus'
+import radio from 'ui/radio'
 
 export default Vue.extend({
   template: __inline('./search-bar.tpl'),
   props: ['on-lrc', 'on-clear-lrcs'],
   data: function () {
     return {
-      wd: '',
+      keyword: '',
       searching: false,
       progress: 0,
+      searchEngine: 'baidu',
+      searchEngines: config.searchEngines
     }
   },
   computed: {
@@ -19,20 +23,24 @@ export default Vue.extend({
   directives: {
     'auto-focus': autoFocus
   },
+  components: {
+    radio: radio
+  },
   methods: {
     onSearch: function () {
       this.onClearLrcs()
       this.searching = true
 
-      service.search(
-        this.wd,
-        (progress) => {
+      service.search({
+        keyword: this.keyword,
+        searchEngine: this.searchEngine,
+        onProgress: (progress) => {
           this.progress = progress
           this.$$.progress.style.width = this.p + '%'
         },
-        (lrc) => this.onLrc(lrc),
-        () => this.searching = false,
-      )
+        onLrc: (lrc) => this.onLrc(lrc),
+        onEnd: () => this.searching = false
+      })
     },
   },
 })

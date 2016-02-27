@@ -1,17 +1,20 @@
 import async from 'async'
-import baidu from './baidu'
-import bing from './bing'
 import fetch from './fetch'
+import searchUrls from './search-urls'
 import extractTextNodes from './extract-text-nodes'
 import extractLrc from './extract-lrc'
 
 const CONCURRENCY = 5
 
-export default (keyword, limit, onProgress, onLrc, onEnd) => {
-  bing(keyword, limit, (err, urls) => {
+export default ({ keyword, limit, searchEngine, onProgress, onLrc, onEnd }) => {
+  searchUrls({
+    keyword: keyword,
+    limit: limit,
+    searchEngine: searchEngine
+  }, (err, urls) => {
     if (err) {
       console.log(err)
-      return onEnd()
+      return onEnd && onEnd()
     }
 
     let count = 0
@@ -21,7 +24,7 @@ export default (keyword, limit, onProgress, onLrc, onEnd) => {
       return (cb) => {
         fetch(url, (err, body) => {
           if (err) {
-            onProgress((++count) / total)
+            onProgress && onProgress((++count) / total)
             return cb()
           }
 
@@ -29,7 +32,7 @@ export default (keyword, limit, onProgress, onLrc, onEnd) => {
           let _lrcs = extractLrc(textNodes)
 
           _lrcs.forEach((_lrc) => onLrc(_lrc))
-          onProgress((++count) / total)
+          onProgress && onProgress((++count) / total)
           cb()
         })
       }

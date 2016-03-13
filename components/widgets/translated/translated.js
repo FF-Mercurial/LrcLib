@@ -12,4 +12,9 @@ export default Vue.extend({
   ready: function () {
     printTranslated(this.$$.container, this.$$.canvas, [])
   },
+  methods: {
+    getDataURL: function () {
+      return this.$$.canvas.toDataURL()
+    }
+  }
 })

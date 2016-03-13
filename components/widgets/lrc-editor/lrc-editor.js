@@ -85,6 +85,9 @@ export default Vue.extend({
 
         page('/now')
       })
+    },
+    onView: function () {
+      location.href = this.$.translated.getDataURL()
     }
   },
   ready: function () {

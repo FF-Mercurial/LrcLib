@@ -15,6 +15,9 @@
     <li v-on="click: onSave" v-if="!noSave">
       <a href="javascript:;">保存</a>
     </li>
+    <li v-on="click: onView">
+      <a href="javascript:;">查看大图</a>
+    </li>
   </ul>
   <div class="w-lrc-editor__container">
     <div class="w-lrc-editor__tab"
@@ -26,6 +29,7 @@
     <div class="w-lrc-editor__tab"
          v-class="w-lrc-editor--active:cur === '翻译'">
       <component is="translated"
+                 v-ref="translated"
                  colors="{{ colors }}"
                  content="{{ content }}"></component>
     </div>

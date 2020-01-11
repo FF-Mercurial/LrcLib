@@ -14,7 +14,6 @@ export default Vue.extend({
         title: '',
         tags: [],
         searchTags: [],
-        isImg: false,
         content: '',
       }
     }
@@ -22,11 +21,6 @@ export default Vue.extend({
   components: {
     lrcEditor: lrcEditor,
     tagsInput: tagsInput,
-  },
-  filters: {
-    url: function (path) {
-      return config.staticHost + path
-    }
   },
   computed: {
     dirty: {

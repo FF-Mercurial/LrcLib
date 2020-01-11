@@ -10,17 +10,11 @@ export default Vue.extend({
     return {
       lrc: {
         content: '',
-        isImg: false
       }
     }
   },
   components: {
     lrcEditor: lrcEditor
-  },
-  filters: {
-    url: function (path) {
-      return config.staticHost + path
-    }
   },
   ready: function () {
     service.getNow((err, data) => {

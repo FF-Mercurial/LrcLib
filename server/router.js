@@ -111,7 +111,6 @@ router.get('/lrc/:_id', (req, res) => {
 
 router.get('/lrcs', (req, res) => {
   db.collection('lrcs').find({}, {
-    isImg: 0,
     content: 0,
   }).sort({ pos : -1 }).toArray((err, docs) => {
     if (err) res500(res)

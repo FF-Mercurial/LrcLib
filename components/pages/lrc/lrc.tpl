@@ -12,11 +12,8 @@
     <component is="tagsInput" tags="{{@ lrc.searchTags }}"></component>
   </div>
   <div class="p-lrc__field">
-    <label>歌词{{ lrc.isImg ? ' (这份歌词是图片格式, 不支持编辑)' : '' }}</label>
-    <div class="p-lrc__img-container" v-if="lrc.isImg">
-      <img class="p-lrc__img" v-attr="src: lrc.content | url">
-    </div>
-    <component is="lrcEditor" v-ref="lrcEditor" content="{{@ lrc.content }}" no-save="no-save" v-if="!lrc.isImg"></component>
+    <label>歌词</label>
+    <component is="lrcEditor" v-ref="lrcEditor" content="{{@ lrc.content }}" no-save="no-save"></component>
   </div>
   <div class="p-lrc__field">
     <button class="btn btn-primary" v-on="click: onSubmit">修改</button>

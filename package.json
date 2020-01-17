@@ -14,5 +14,8 @@
     "iconv-lite": "*",
     "mongodb": "*",
     "request": "*"
+  },
+  "devDependencies": {
+    "babel-core": "^5.8.38"
   }
 }

@@ -4,7 +4,7 @@ var DEFAULT_PORT = 5000;
 
 var meta = require('../package.json'),
     path = require('path'),
-    config = require('../config'),
+    config = require('./config'),
     app = module.exports = require('express')(),
     port = parseInt(process.argv[2]);
 
